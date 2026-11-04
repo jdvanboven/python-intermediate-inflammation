@@ -9,3 +9,23 @@ requires-python = ">=3.9"
 
 [tool.setuptools]
 packages = ["inflammation"]
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # pycodestyle
+    "W",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-builtins
+    "A",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I"
+]
