@@ -3,7 +3,6 @@ name: CI
 on: push
 jobs:
   build:
-
     # Here we add the matrices definition:
     strategy:
       matrix:
@@ -15,20 +14,23 @@ jobs:
 
     # Same key-value pairs as in "Defining Our Workflow" section
     steps:
+      - name: Checkout repository
+        uses: actions/checkout@v4
 
-    - name: Checkout repository
-      uses: actions/checkout@v4
+      - name: Set up Python ${{ matrix.python-version }}
+        uses: actions/setup-python@v5
+        with:
+          # Here we add the reference to the python-version matrix values
+          python-version: ${{ matrix.python-version }}
+      # Same steps as in "Defining Our Workflow" section
+      - name: Install Python dependencies
+        run: |
+          python3 -m pip install --upgrade pip
+          python3 -m pip install -r requirements.txt .
+      - name: Test with PyTest
+        run: |
+          python3 -m pytest --cov=inflammation.models tests/test_models.py
 
-    - name: Set up Python ${{ matrix.python-version }}
-      uses: actions/setup-python@v5
-      with:
-        # Here we add the reference to the python-version matrix values
-        python-version: ${{ matrix.python-version }}
-    # Same steps as in "Defining Our Workflow" section
-    - name: Install Python dependencies
-      run: |
-        python3 -m pip install --upgrade pip
-        python3 -m pip install -r requirements.txt .
-    - name: Test with PyTest
-      run: |
-        python3 -m pytest --cov=inflammation.models tests/test_models.py
+      - name: Check style with Ruff
+        run: |
+          python3 -m ruff check --exit-zero --output-format=github inflammation
