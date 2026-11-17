@@ -9,7 +9,47 @@ and each column represents a single day across all patients.
 
 import numpy as np
 import json
+import glob
+import os
 
+class CSVDataSource:
+    def __init__(self, data_dir):
+        self.data_dir = data_dir
+
+    def load_inflammation_data(self):
+        """Loads data from a given directory
+
+        Collects all inflammation data from csv files within a given directory
+        and returns the data."""
+
+        data_file_paths = glob.glob(os.path.join(self.data_dir, "inflammation*.csv"))
+        if len(data_file_paths) == 0:
+            raise ValueError(
+                f"No inflammation data CSV files found in path {self.data_dir}"
+            )
+        data = map(load_csv, data_file_paths)
+
+        return list(data)
+
+
+class JSONDataSource:
+    def __init__(self, data_dir):
+        self.data_dir = data_dir
+
+    def load_inflammation_data(self):
+        """Loads data from a given directory
+
+        Collects all inflammation data from JSON files within a given directory
+        and returns the data."""
+
+        data_file_paths = glob.glob(os.path.join(self.data_dir, "inflammation*.json"))
+        if len(data_file_paths) == 0:
+            raise ValueError(
+                f"No inflammation data JSON files found in path {self.data_dir}"
+            )
+        data = map(load_json, data_file_paths)
+
+        return list(data)
 
 def load_csv(filename):
     """Load a Numpy array from a CSV
@@ -51,3 +91,22 @@ def daily_max(data):
 def daily_min(data):
     """Calculate the daily min of a 2d inflammation data array."""
     return np.min(data, axis=0)
+
+def analyse_data(data_source):
+    """Calculates the standard deviation by day between datasets.
+
+    Gets all the inflammation data from CSV files within a directory,
+    works out the mean inflammation value for each day across all datasets,
+    and returns the standard deviation of these means."""
+
+    data = data_source.load_inflammation_data()
+    daily_standard_deviation = compute_standard_deviation_by_day(data)
+
+    return daily_standard_deviation
+
+def compute_standard_deviation_by_day(data):
+    means_by_day = map(daily_mean, data)
+    means_by_day_matrix = np.stack(list(means_by_day))
+    daily_standard_deviation = np.std(means_by_day_matrix, axis=0)
+
+    return daily_standard_deviation
