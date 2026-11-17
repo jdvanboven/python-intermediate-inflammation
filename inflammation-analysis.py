@@ -5,7 +5,7 @@ import argparse
 import os
 
 from inflammation import models, views
-from inflammation.compute_data import analyse_data
+from inflammation.compute_data import analyse_data, CSVDataSource, JSONDataSource
 
 
 def main(args):
@@ -15,13 +15,21 @@ def main(args):
     - selecting the necessary models and views for the current task
     - passing data between models and views
     """
+
     infiles = args.infiles
     if not isinstance(infiles, list):
         infiles = [args.infiles]
 
 
     if args.full_data_analysis:
-        analyse_data(os.path.dirname(infiles[0]))
+        file_extension = os.path.splitext(infiles[0])[1]
+        if file_extension == ".csv":
+            data_source = CSVDataSource(os.path.dirname(infiles[0]))
+        elif file_extension == ".json":
+            data_source = JSONDataSource(os.path.dirname(infiles[0]))
+        else:
+            raise ValueError(f"Unsupported file type: {file_extension}")
+        analyse_data(data_source)
         return
 
     for filename in infiles:
