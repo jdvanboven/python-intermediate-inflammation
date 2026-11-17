@@ -7,6 +7,8 @@ import numpy as np
 
 from inflammation import models, views
 
+def load_inflammation_data(directory):
+    pass
 
 def analyse_data(data_dir):
     """Calculates the standard deviation by day between datasets.
