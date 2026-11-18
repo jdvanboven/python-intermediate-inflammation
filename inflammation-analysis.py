@@ -5,7 +5,7 @@ import argparse
 import os
 
 from inflammation import models, views
-from inflammation.models import CSVDataSource, JSONDataSource, analyse_data, compute_standard_deviation_by_day
+from inflammation.models import CSVDataSource, JSONDataSource, analyse_data
 
 def main(args):
     """The MVC Controller of the patient inflammation data system.
