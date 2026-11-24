@@ -35,6 +35,8 @@ def daily_min(data):
 
 def calculate_standard_deviation(data):
     """Computes and returns standard deviation for data."""
+    if np.any(np.isnan(data)):
+        raise TypeError
     mean_inflammation = np.mean(data, axis=0)
     devs = []
     for entry in data:
