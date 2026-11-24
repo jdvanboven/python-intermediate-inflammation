@@ -39,6 +39,8 @@ def test_daily_mean(test, expected):
     """Test that mean function works for an array of zeros, positive integers and positive float numbers."""
     npt.assert_array_equal(daily_mean(np.array(test)), np.array(expected))
 
+    test_input = np.array([[1, 2], [3, 4], [5, 6]])
+    test_result = np.array([3, 4])
 
 @pytest.mark.parametrize(
     "test, expected",
@@ -197,6 +199,33 @@ def test_analyse_data_mock_source():
     analyse_data(data_source)
 
 
+
+@pytest.mark.parametrize(
+    "data, expected_standard_deviation",
+    [
+        ([0, 0, 0], 0.0),
+        ([1.0, 1.0, 1.0], 0),
+        ([0.0, 2.0], 1.0),
+    ],
+)
+def test_daily_standard_deviation(data, expected_standard_deviation):
+    from inflammation.models import calculate_standard_deviation
+
+    result_data = calculate_standard_deviation(data)["standard deviation"]
+    npt.assert_approx_equal(result_data, expected_standard_deviation)
+
+
+@pytest.mark.parametrize(
+    "data, expected_error",
+    [
+        ([float("NaN"), 5.0], TypeError),
+    ],
+)
+def test_daily_standard_deviation_NaN(data, expected_error):
+    from inflammation.models import calculate_standard_deviation
+
+    with pytest.raises(expected_error):
+        calculate_standard_deviation(data)
 @pytest.mark.parametrize(
     "test, expected",
     [

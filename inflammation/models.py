@@ -108,6 +108,17 @@ def daily_min(data):
     return np.min(data, axis=0)
 
 
+def calculate_standard_deviation(data):
+    """Computes and returns standard deviation for data."""
+    if np.any(np.isnan(data)):
+        raise TypeError
+    mean_inflammation = np.mean(data, axis=0)
+    devs = []
+    for entry in data:
+        devs.append((entry - mean_inflammation) * (entry - mean_inflammation))
+
+    standard_deviation = sum(devs) / len(data)
+    return {'standard deviation': standard_deviation}
 def patient_normalise(data):
     """
     Normalise patient data between 0 and 1 of a 2D inflammation data array.
