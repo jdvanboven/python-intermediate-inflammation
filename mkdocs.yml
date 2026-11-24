@@ -1,0 +1,9 @@
+site_name: Inflam
+
+nav:
+  - Overview: index.md
+  - API: API.md
+
+plugins:
+  - search
+  - mkdocstrings
