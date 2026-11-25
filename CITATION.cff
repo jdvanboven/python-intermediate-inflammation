@@ -1,0 +1,22 @@
+# This CITATION.cff file was generated with cffinit.
+# Visit https://bit.ly/cffinit to generate yours today!
+
+cff-version: 1.2.0
+title: Inflam
+message: >-
+  If you use this software, please cite it using the
+  metadata from this file.
+type: software
+authors:
+  - given-names: Joram
+    family-names: van Boven
+    email: j.d.vanboven@live.nl
+    affiliation: RIVM
+    orcid: 'https://orcid.org/0009-0000-7914-8339'
+repository-code: >-
+  https://github.com/jdvanboven/python-intermediate-inflammation
+url: >-
+  https://jdvanboven.github.io/python-intermediate-inflammation/
+keywords:
+  - Inflammation
+license: MIT

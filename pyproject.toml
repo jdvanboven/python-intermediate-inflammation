@@ -6,6 +6,31 @@ build-backend = "setuptools.build_meta"
 name = "python-intermediate-inflammation"
 version = "0.0.0"
 requires-python = ">=3.9"
+description = "A Python data management system that manages trial data used in clinical inflammation studies."
+readme = "README.md"
 
 [tool.setuptools]
 packages = ["inflammation"]
+
+[tool.ruff]
+line-length = 120
+
+[tool.ruff.lint]
+select = [
+    # pycodestyle
+    "E",
+    # pycodestyle
+    "W",
+    # Pyflakes
+    "F",
+    # pyupgrade
+    "UP",
+    # flake8-builtins
+    "A",
+    # flake8-bugbear
+    "B",
+    # flake8-simplify
+    "SIM",
+    # isort
+    "I"
+]
